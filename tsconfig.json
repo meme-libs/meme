@@ -9,7 +9,7 @@
     "removeComments": false,
     "strict": true,
     "moduleResolution": "node",
-    "baseUrl": "./src",
+    "baseUrl": "./pages",
     "types": [ "node" ],
     "esModuleInterop": true,
     "skipLibCheck": true,

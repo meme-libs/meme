@@ -1,11 +1,19 @@
 import { defineConfig } from 'vite'
-import * as fs from 'fs'
+import { resolve } from 'path'
+import { readdirSync } from 'fs'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function allMemes() {
-  return fs.readdirSync('./public/memes')
+  return readdirSync('./public/memes')
+}
+
+const rollupOptions = {
+  input: {
+    main: resolve(__dirname, './pages/index.html')
+  }
 }
 
 export default defineConfig({
-  publicDir: 'public'
+  publicDir: 'public',
+  build: { rollupOptions }
 })
