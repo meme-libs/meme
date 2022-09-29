@@ -5,15 +5,8 @@ module.exports = {
     sourceType: 'module'
   },
   extends: [
-    'plugin:@typescript-eslint/recommended',
-    'plugin:import/typescript'
+    'plugin:@typescript-eslint/recommended'
   ],
-  settings: {
-    'import/resolver': {
-      typescript: true,
-      node: true
-    }
-  },
   rules: {
     'no-use-before-define': 'off',
     'semi': ['error', 'never'],
