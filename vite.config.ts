@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { BuildOptions, defineConfig } from 'vite'
 import { resolve } from 'path'
 import { readdirSync } from 'fs'
 
@@ -7,13 +7,14 @@ function allMemes() {
   return readdirSync('./public/memes')
 }
 
-const rollupOptions = {
+const rollupOptions: BuildOptions['rollupOptions'] = {
   input: {
-    main: resolve(__dirname, './pages/index.html')
+    index: resolve(__dirname, './pages/index.html')
   }
 }
 
 export default defineConfig({
-  publicDir: 'public',
-  build: { rollupOptions }
+  root: './pages',
+  build: { rollupOptions },
+  publicDir: 'public'
 })
