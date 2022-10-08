@@ -1,0 +1,93 @@
+div.gallery {
+  display: flex;
+  column-gap: 10px;
+  & > div.col0, & > div.col1, & > div.col2 {
+    width: 300px;
+    overflow: hidden;
+    > div.item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      > div.imgs {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        overflow: hidden;
+        cursor: pointer;
+        user-select: none;
+        > span.count {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          display: flex;
+          align-items: center;
+          column-gap: 4px;
+          padding: 1px 5px;
+          width: 35px;
+          color: white;
+          background-color: #afafaf55;
+          border-radius: 4px;
+        }
+        > span.material-icons.icon {
+          opacity: 0;
+          transition: 0.3s;
+          &.l-btn, &.r-btn {
+            position: absolute;
+            top: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            color: white;
+            cursor: pointer;
+            background-color: #afafaf55;
+            border-radius: 50%;
+            user-select: none;
+            &.l-btn {
+              left: 5px;
+            }
+            &.r-btn {
+              right: 5px;
+            }
+          }
+        }
+        > div.mask {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+          background-color: #fff2;
+          opacity: 0;
+          transition: 0.3s;
+        }
+        &:hover {
+          > div.mask {
+            opacity: 1;
+          }
+          > span.material-icons.icon {
+            opacity: 1;
+          }
+        }
+        > img {
+          width: 100%;
+          min-height: 300px;
+          object-fit: contain;
+          background-color: black;
+          border-radius: 4px;
+        }
+      }
+      > h3.title {
+        margin: 10px 0 0;
+        width: 100%;
+      }
+      > div.desc {
+        padding: 4px 10px;
+        width: 100%;
+      }
+    }
+  }
+}
