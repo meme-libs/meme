@@ -4,8 +4,8 @@ import { Footer, Gallery, Header } from './components'
 
 html.render(
   document.querySelector<HTMLElement>('#app')!, [
-    Header(),
-    Gallery(),
-    Footer()
+    Header,
+    Gallery,
+    Footer
   ]
 )

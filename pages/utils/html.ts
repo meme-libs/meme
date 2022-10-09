@@ -14,6 +14,7 @@ function resolve(value: any): string {
 }
 
 export class HTMLEle {
+  self: Element | null = null
   readonly #inner: [strings: TemplateStringsArray, values: any[]]
   constructor(strings: TemplateStringsArray, values: any[]) {
     this.#inner = [strings, values]
@@ -24,12 +25,25 @@ export class HTMLEle {
       return acc + str + String(resolve(values[i]) || '')
     }, '')
   }
+  mount(self: Element) {
+    this.self = self
+    self.innerHTML = this.toString()
+  }
 }
 
 export default function html(strings: TemplateStringsArray, ...values: any[]) {
   return new HTMLEle(strings, values)
 }
 
-html.render = function (ele: HTMLElement, children: HTMLEle[]) {
-  ele.innerHTML = children.map((child) => child.toString()).join('')
+const renderEle = document.createElement('div')
+
+html.render = function (ele: HTMLElement, children: (() => HTMLEle)[]) {
+  const elements = children.map(fc => {
+    const fcIns = fc()
+    renderEle.innerHTML = fcIns.toString()
+    const ele = renderEle.firstElementChild!
+    fcIns.mount(ele)
+    return ele
+  })
+  ele.append(...elements)
 }
