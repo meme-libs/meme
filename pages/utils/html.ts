@@ -53,9 +53,9 @@ html.render = function (ele: HTMLElement, children: (() => HTMLEle)[]) {
   const elements = children.map(fc => {
     const fcIns = fc()
     renderEle.innerHTML = fcIns.toString()
-    const ele = renderEle.firstElementChild!
-    fcIns[MountSymbol](ele)
-    return ele
+    const e = renderEle.firstElementChild!
+    fcIns[MountSymbol](e)
+    return e
   })
   ele.append(...elements)
 }
