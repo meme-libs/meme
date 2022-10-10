@@ -13,6 +13,12 @@ function resolve(value: any): string {
   }
 }
 
+export interface CMap {
+  onMounted?: (this: HTMLEle, ref: Element) => void
+}
+
+const MountSymbol = Symbol('mount')
+
 export class HTMLEle {
   self: Element | null = null
   readonly #inner: [strings: TemplateStringsArray, values: any[]]
@@ -25,9 +31,15 @@ export class HTMLEle {
       return acc + str + String(resolve(values[i]) || '')
     }, '')
   }
-  mount(self: Element) {
+  [MountSymbol](self: Element) {
     this.self = self
     self.innerHTML = this.toString()
+    this.callbacks.onMounted?.apply(this, [this.self])
+  }
+  callbacks: CMap = {}
+  use<T extends keyof CMap>(t: T, callback: CMap[T]) {
+    this.callbacks[t] = callback
+    return this
   }
 }
 
@@ -42,7 +54,7 @@ html.render = function (ele: HTMLElement, children: (() => HTMLEle)[]) {
     const fcIns = fc()
     renderEle.innerHTML = fcIns.toString()
     const ele = renderEle.firstElementChild!
-    fcIns.mount(ele)
+    fcIns[MountSymbol](ele)
     return ele
   })
   ele.append(...elements)
