@@ -1,11 +1,10 @@
-import './index.sass'
-import html from './utils/html'
-import { Footer, Gallery, Header } from './components'
+import './index.scss'
 
-html.render(
-  document.querySelector<HTMLElement>('#app')!, [
-    Header,
-    Gallery,
-    Footer
-  ]
-)
+import { createApp } from 'vue'
+
+import App from './App.vue'
+
+const app = createApp(App)
+
+app
+  .mount('#app')

@@ -1,6 +1,8 @@
-import { BuildOptions, defineConfig } from 'vite'
 import { resolve } from 'path'
 import { readdirSync } from 'fs'
+
+import { BuildOptions, defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function allMemes() {
@@ -16,5 +18,6 @@ const rollupOptions: BuildOptions['rollupOptions'] = {
 export default defineConfig({
   root: './pages',
   build: { rollupOptions },
-  publicDir: 'public'
+  publicDir: 'public',
+  plugins: [ vue() ]
 })
