@@ -20,10 +20,20 @@
 import Gallery from './components/gallery.vue'
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 header {
+  display: flex;
+  align-items: center;
   padding: 0.5rem 10rem;
-  text-align: left;
+  > h1 { flex-grow: 1; }
+  > div.icons {
+    display: flex;
+    column-gap: 10px;
+    user-select: none;
+    > span.icon {
+      cursor: pointer;
+    }
+  }
 }
 main.content {
   padding: 0.5rem 30rem;
