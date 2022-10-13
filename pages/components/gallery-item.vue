@@ -36,15 +36,18 @@ div.gallery-item {
   transition: all 0.2s ease-in-out;
   .imgs {
     width: 100%;
-    height: 100%;
-    .el-carousel {
-      height: 100%;
+    :deep(.el-carousel) {
       overflow: hidden;
       background-color: #000d;
       border-radius: 4px;
+      .el-carousel__container {
+        height: auto;
+      }
+      .el-carousel__item {
+        position: relative;
+      }
       .el-carousel__item img {
         width: 100%;
-        height: 100%;
         object-fit: contain;
       }
     }
