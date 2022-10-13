@@ -7,6 +7,7 @@
       <gallery-item
         v-for="item in images.filter((_, index) => (index % 3 === i))"
         :key="JSON.stringify(item.srcList)"
+        :id="item.id"
         :title="item.title"
         :description="item.description"
         :srcList="item.srcList"
@@ -19,11 +20,12 @@
 import { ElCol } from 'element-plus'
 import GalleryItem from './gallery-item.vue'
 
-const images = [...new Array(19).keys()].map(i => ({
-  title: `第 ${i} 张`,
-  srcList: ['memes/[1][第 一 张 梗 图].png', 'memes/[1][第 一 张 梗 图].png'],
-  description: `这是第 ${i} 张图`
-}))
+const images = [{
+  id: 1,
+  title: '梦 开 始 的 地 方',
+  srcList: ['memes/[1][梦 开 始 的 地 方]/第 一 张 梗 图.png'],
+  description: '梦 开 始 的 地 方'
+}]
 </script>
 
 <style lang="scss" scoped>
