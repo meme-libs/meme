@@ -5,3 +5,16 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+declare global {
+  interface Meme {
+    id: number
+    title: string
+    description: string
+    srcList: string[]
+  }
+  export declare const MEMES: Meme[]
+  interface Window {
+    MEMES: Meme[]
+  }
+}

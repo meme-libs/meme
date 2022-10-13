@@ -6,7 +6,18 @@ import vue from '@vitejs/plugin-vue'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function allMemes() {
-  return readdirSync('./public/memes')
+  const memesDir = resolve(__dirname, './memes')
+  return readdirSync(memesDir)
+    .map(dir => {
+      const [id, title] = /^\[(\d+)]\[(.*)]$/.exec(dir)!.slice(1)
+      return {
+        id: Number(id),
+        title,
+        description: title,
+        srcList: readdirSync(resolve(memesDir, dir)).map(src => `memes/${dir}/${src}`)
+      // @ts-ignore
+      } as Meme
+    })
 }
 
 const rollupOptions: BuildOptions['rollupOptions'] = {
@@ -17,7 +28,10 @@ const rollupOptions: BuildOptions['rollupOptions'] = {
 
 export default defineConfig({
   root: './pages',
-  build: { rollupOptions },
   publicDir: 'public',
+  define: {
+    MEMES: allMemes()
+  },
+  build: { rollupOptions },
   plugins: [ vue() ]
 })
