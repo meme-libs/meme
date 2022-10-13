@@ -9,6 +9,7 @@
     </div>
   </header>
   <main class="content">
+    <random-meme />
     <gallery />
   </main>
   <footer>
@@ -18,6 +19,7 @@
 
 <script lang="ts" setup>
 import Gallery from './components/gallery.vue'
+import RandomMeme from './components/random-meme.vue'
 </script>
 
 <style lang="scss" scoped>
@@ -36,6 +38,9 @@ header {
   }
 }
 main.content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
   padding: 0.5rem 30rem;
 }
 footer {
