@@ -1,7 +1,7 @@
 <template>
-  <el-card>
+  <el-card class="random-meme">
     <template #header>
-      <h2>#{{meme.title}}</h2>
+      <h2 :id="meme.title">#{{meme.title}}</h2>
       <span>
         <el-button link>
           <span class="material-icons">download</span>
@@ -35,17 +35,19 @@ const meme = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-:deep(div.el-card__header) {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-:deep(div.el-card__body) {
-  .meme {
-    > .el-carousel > .el-carousel__container {
-      height: 55vh;
-      .el-carousel__item img {
-        height: 100%;
+div.random-meme {
+  :deep(div.el-card__header) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  :deep(div.el-card__body) {
+    .meme {
+      > .el-carousel > .el-carousel__container {
+        height: 55vh;
+        .el-carousel__item img {
+          height: 100%;
+        }
       }
     }
   }
