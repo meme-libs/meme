@@ -18,7 +18,7 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 import { ElCard, ElButton } from 'element-plus'
-import Meme from './Meme.vue'
+import Meme from './meme.vue'
 
 
 const randomCount = ref(Math.floor(

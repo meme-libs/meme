@@ -12,7 +12,7 @@
 
 <script lang="ts" setup>
 import { ElCarousel, ElCarouselItem } from 'element-plus'
-import Meme from './Meme.vue'
+import Meme from './meme.vue'
 
 defineProps<{
   id: number
