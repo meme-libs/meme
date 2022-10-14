@@ -4,7 +4,6 @@ import { readdirSync } from 'fs'
 import { BuildOptions, defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function allMemes() {
   const memesDir = resolve(__dirname, './memes')
   return readdirSync(memesDir)
