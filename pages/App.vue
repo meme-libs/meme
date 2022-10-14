@@ -2,9 +2,17 @@
   <header>
     <h1>Meme</h1>
     <div class="icons">
-      <span class="icon material-icons">dark_mode</span>
+      <span
+        class="icon material-icons style-mode"
+        :class="{
+          'is-dark': isDark,
+        }"
+        @click="toggleDark()"
+      >
+        {{!isDark ? 'dark_mode' : 'light_mode'}}
+      </span>
       <span class="icon material-icons">
-        <img src="assets/github/GitHub-D.png" alt="github" width="24">
+        <img :src="`assets/github/GitHub-${ !isDark ? 'D' : 'L' }.png`" alt="github" width="24">
       </span>
     </div>
   </header>
@@ -18,8 +26,13 @@
 </template>
 
 <script lang="ts" setup>
+import { useDark, useToggle } from '@vueuse/core'
+
 import Gallery from './components/gallery.vue'
 import RandomMeme from './components/random-meme.vue'
+
+const isDark = useDark()
+const toggleDark = useToggle(isDark)
 </script>
 
 <style lang="scss" scoped>
@@ -34,6 +47,17 @@ header {
     user-select: none;
     > span.icon {
       cursor: pointer;
+      opacity: 0.5;
+      transition: opacity 0.5s;
+      &:hover { opacity: 1; }
+      &.style-mode {
+        color: #f1c40f;
+        filter: drop-shadow(0 0 0.5rem #f1c40f);
+        &.is-dark {
+          color: #f39c12;
+          filter: drop-shadow(0 0 0.5rem #f39c12);
+        }
+      }
     }
   }
 }
