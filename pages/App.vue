@@ -17,8 +17,7 @@
     </div>
   </header>
   <main class="content">
-    <random-meme />
-    <gallery />
+    <router-view />
   </main>
   <footer>
     <p>© 2022 Meme</p>
@@ -27,9 +26,6 @@
 
 <script lang="ts" setup>
 import { useDark, useToggle } from '@vueuse/core'
-
-import Gallery from './components/gallery.vue'
-import RandomMeme from './components/random-meme.vue'
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
