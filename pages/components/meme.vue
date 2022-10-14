@@ -49,10 +49,12 @@ defineProps<{
     }
     .el-carousel__item {
       position: relative;
-    }
-    .el-carousel__item img {
-      width: 100%;
-      object-fit: contain;
+      display: block;
+      > img {
+        display: block;
+        width: 100%;
+        object-fit: contain;
+      }
     }
   }
 }
