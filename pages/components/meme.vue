@@ -1,9 +1,9 @@
 <template>
   <div class="meme">
-      <span class="count">
-        <span class="material-icons" style="font-size: 14px;">photo_library</span>
-        {{ srcList.length }}
-      </span>
+    <span class="count">
+      <span class="material-icons" style="font-size: 14px;">photo_library</span>
+      {{ srcList.length }}
+    </span>
     <el-carousel trigger="click" :autoplay="false" :loop="false">
       <el-carousel-item v-for="(src, i) in srcList" :key="src">
         <img :src="src" :alt="`${title}-${i}`"/>
@@ -37,6 +37,7 @@ defineProps<{
     color: white;
     background-color: #afafaf55;
     border-radius: 4px;
+    user-select: none;
   }
   > :deep(.el-carousel) {
     overflow: hidden;
