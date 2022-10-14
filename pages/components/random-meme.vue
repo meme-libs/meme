@@ -11,7 +11,10 @@
         </el-button>
       </span>
     </template>
-    <meme :src-list="meme.srcList"/>
+    <meme
+      :title="meme.title"
+      :src-list="meme.srcList"
+    />
   </el-card>
 </template>
 

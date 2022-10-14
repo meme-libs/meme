@@ -1,6 +1,9 @@
 <template>
   <div class="gallery-item">
-    <meme :src-list="srcList"/>
+    <meme
+      :title="title"
+      :src-list="srcList"
+    />
     <div class="title">
       <h5>{{ title }}</h5>
     </div>

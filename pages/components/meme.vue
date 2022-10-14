@@ -16,6 +16,7 @@
 import { ElCarousel, ElCarouselItem } from 'element-plus'
 
 defineProps<{
+  title: string
   srcList: string[]
 }>()
 </script>
