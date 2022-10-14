@@ -6,15 +6,15 @@ declare module '*.vue' {
   export default component
 }
 
-declare global {
-  interface Meme {
+export declare global {
+  export interface Meme {
     id: number
     title: string
     description: string
     srcList: string[]
   }
   export declare const MEMES: Meme[]
-  interface Window {
+  export interface Window {
     MEMES: Meme[]
   }
 }

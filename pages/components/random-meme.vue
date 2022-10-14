@@ -23,13 +23,10 @@ import { computed, ref } from 'vue'
 import { ElCard, ElButton } from 'element-plus'
 import Meme from './meme.vue'
 
-
 const randomCount = ref(Math.floor(
-  // @ts-ignore
   Math.random() * MEMES.length
 ))
 const meme = computed(() => {
-  // @ts-ignore
   return MEMES[randomCount.value]
 })
 </script>
