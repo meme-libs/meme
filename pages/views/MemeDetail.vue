@@ -7,13 +7,14 @@
       />
       <div class="meta">
         <el-row>
-          <el-col :span="8">
-            创建时间: {{ new Date(issue?.createdAt).toLocaleString() }}
+          <el-col :span="12">
+            <h2>
+              <a :href="issue?.pullRequest.htmlUrl" target="_blank">
+                {{ meme.title }}
+              </a>
+            </h2>
           </el-col>
-          <el-col :span="8">
-            更新时间: {{ new Date(issue?.updatedAt).toLocaleString() }}
-          </el-col>
-          <el-col :span="8"
+          <el-col :span="12"
                   style="justify-content: end; column-gap: 15px;">
             <el-badge
               type="primary"
@@ -25,11 +26,16 @@
           </el-col>
         </el-row>
         <el-row>
-          <h2>
-            <a :href="issue?.pullRequest.htmlUrl" target="_blank">
-              {{ meme.title }}
-            </a>
-          </h2>
+          {{ issue?.body }}
+        </el-row>
+        <el-row>
+          <el-col :span="8"></el-col>
+          <el-col :span="8" style="justify-content: end;">
+            创建时间: {{ new Date(issue?.createdAt).toLocaleString() }}
+          </el-col>
+          <el-col :span="8" style="justify-content: end;">
+            更新时间: {{ new Date(issue?.updatedAt).toLocaleString() }}
+          </el-col>
         </el-row>
       </div>
     </el-card>
