@@ -63,7 +63,7 @@ main.content {
   display: flex;
   flex-direction: column;
   row-gap: 30px;
-  padding: 0.5rem 30rem;
+  padding: 0.5rem 10vw;
 }
 footer {
   padding: 0.5rem 10rem;
