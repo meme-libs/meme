@@ -61,5 +61,13 @@ describe('String', () => {
         b_d: 0
       })
     })
+    it('should resolve null, undefined and more type.', () => {
+      expect(camelCaseObjKeys(null)).to.be.deep.eq(null)
+      expect(camelCaseObjKeys(undefined)).to.be.deep.eq(undefined)
+      expect(camelCaseObjKeys(0)).to.be.deep.eq(0)
+      expect(camelCaseObjKeys('')).to.be.deep.eq('')
+      expect(camelCaseObjKeys(true)).to.be.deep.eq(true)
+      expect(camelCaseObjKeys(false)).to.be.deep.eq(false)
+    })
   })
 })

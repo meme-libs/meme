@@ -7,29 +7,32 @@ type Resolver = (o: any, options?: ResolverOptions) => any;
 type StringResolve = (string: string) => string
 
 export const createResolver = (resolve: StringResolve): Resolver => function resolver(o, options): any {
+  if (o === null) return o
+
   if (Array.isArray(o)) {
     return o.map(item => typeof item === 'object'
       ? resolver(item, options)
       : item)
   }
-  return Object.entries(o).reduce((acc, [key, value]) => {
-    let needResolve = true
-    if (options?.excludes) {
-      needResolve = !options.excludes.some(exclude => {
-        if (typeof exclude === 'string') {
-          return exclude === key
-        }
-        return exclude.test(key)
-      })
-    }
-    const nk = needResolve ? resolve(key) : key
-    if (typeof value === 'object') {
+
+  if (typeof o === 'object') {
+    return Object.entries(o).reduce((acc, [key, value]) => {
+      let needResolve = true
+      if (options?.excludes) {
+        needResolve = !options.excludes.some(exclude => {
+          if (typeof exclude === 'string') {
+            return exclude === key
+          }
+          return exclude.test(key)
+        })
+      }
+      const nk = needResolve ? resolve(key) : key
       acc[nk] = resolver(value, options)
-    } else {
-      acc[nk] = o[key]
-    }
-    return acc
-  }, {} as Record<string, any>)
+      return acc
+    }, {} as Record<string, any>)
+  } else {
+    return o
+  }
 }
 
 export function camelCase(s: string) {
