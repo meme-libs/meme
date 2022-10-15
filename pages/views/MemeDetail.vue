@@ -1,6 +1,6 @@
 <template>
   <div class="meme-with-autor">
-    <el-card class="meme">
+    <el-card class="detail">
       <meme
         :title="meme.title"
         :src-list="meme.srcList"
@@ -79,7 +79,10 @@ watch(id, async () => {
 <style lang="scss" scoped>
 div.meme-with-autor {
   display: flex;
-  > div.el-card {
+  > div.el-card.detail {
+    :deep(div.el-card__body) {
+      padding: 0;
+    }
     :deep(div.el-card__body) > .meme {
       > .el-carousel > .el-carousel__container {
         height: 75vh;
@@ -89,7 +92,7 @@ div.meme-with-autor {
       }
     }
     div.meta {
-      margin-top: 15px;
+      padding: 20px;
       > div.el-row > div.el-col {
         display: flex;
         align-items: center;
