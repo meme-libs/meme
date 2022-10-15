@@ -4,6 +4,10 @@ export const router = createRouter({
   history: createWebHistory(),
   routes: [{
     path: '/',
-    component: () => import('./routes/Home.vue')
+    component: () => import('./views/Home.vue')
+  }, {
+    path: '/:idOrTitle',
+    props: true,
+    component: () => import('./views/MemeDetail.vue')
   }]
 })
