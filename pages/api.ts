@@ -1,4 +1,4 @@
-import { camelCaseObjKeys } from '@/utils/string'
+import { camelCaseObjKeys, ResolverOptions } from '@/utils/string'
 
 const config = {
   host: 'api.github.com',
@@ -10,11 +10,11 @@ const prefix = `https://${config.host}`
 
 const repoPrefix = `${prefix}/repos/${config.org}/${config.repo}`
 
-const resolveFetch = async <T>(p: Promise<Response>) => {
+const resolveFetch = async <T>(p: Promise<Response>, options?: ResolverOptions) => {
   const res = await p
   if (res.ok) {
     const d = await res.json()
-    return camelCaseObjKeys(d) as T
+    return camelCaseObjKeys(d, options) as T
   } else {
     throw new Error(res.statusText)
   }
@@ -90,9 +90,9 @@ export namespace Github {
 export default {
   repos: {
     async issue(id: number) {
-      return resolveFetch<Github.Issue>(
-        fetch(`${repoPrefix}/issues/${id}`)
-      )
+      return resolveFetch<Github.Issue>(fetch(`${repoPrefix}/issues/${id}`), {
+        excludes: [ '-1' ]
+      })
     }
   }
 }
