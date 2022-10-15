@@ -48,6 +48,7 @@
           <a :href="issue?.user.htmlUrl" target="_blank">{{ issue?.user.login }}</a>
         </h3>
       </div>
+      <el-button type="primary" @click="toUserProfile">关注</el-button>
       <div class="tags">
         <el-tooltip
           v-for="tag in issue?.labels" :key="tag"
@@ -116,6 +117,10 @@ function tagStyle(hex: string) {
   `
 }
 
+function toUserProfile() {
+  window.open(issue.value?.user.htmlUrl, '_blank')
+}
+
 const props = defineProps<{
   idOrTitle: string
 }>()
@@ -161,6 +166,9 @@ div.meme-with-autor {
     }
   }
   > div.other-meta {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
     padding: 10px;
     max-width: 20vw;
     min-width: 20vw;
@@ -184,7 +192,7 @@ div.meme-with-autor {
       background: rgb(var(--label-r) var(--label-g) var(--label-b) / var(--background-alpha));
       border-color: hsl(var(--label-h) calc(var(--label-s) * 1%) calc((var(--label-l) + var(--lighten-by)) * 1%) / var(--border-alpha));
     }
+    // stylelint-enable max-line-length
   }
-  // stylelint-enable max-line-length
 }
 </style>
