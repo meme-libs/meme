@@ -70,8 +70,9 @@ export namespace Github {
     number: number
     title: string
     user: User
-    labels: Label[]
+    body: string
     state: 'open' | 'closed'
+    labels: Label[]
     comments: number
     createdAt: string
     updatedAt: string
