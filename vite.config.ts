@@ -31,6 +31,11 @@ export default defineConfig({
   define: {
     MEMES: allMemes()
   },
+  resolve: {
+    alias: {
+      '@': resolve('pages')
+    }
+  },
   build: { rollupOptions },
   plugins: [ vue() ]
 })

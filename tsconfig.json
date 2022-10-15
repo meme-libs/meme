@@ -9,11 +9,18 @@
     "removeComments": false,
     "strict": true,
     "moduleResolution": "node",
-    "baseUrl": "./pages",
     "types": [ "node" ],
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "./pages",
+    "paths": {
+      // relative base url
+      "@/*": [ "./*" ],
+    }
   },
-  "exclude": [ "node_modules" ]
+  "exclude": [ "node_modules" ],
+  "ts-node": {
+    "require": [ "tsconfig-paths/register" ]
+  }
 }
