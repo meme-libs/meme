@@ -1,32 +1,54 @@
-import {
-  isArray,
-  isNumber,
-  isString,
-  isBoolean,
-  mapKeys,
-  forIn,
-  snakeCase
-} from 'lodash-es'
-import camelCase from 'camelcase'
+type Resolver = (o: any, options?: {
+  excludes?: (string | RegExp)[]
+}) => any;
 
-type DoAllKeys = (o: any) => any;
+type StringResolve = (string: string) => string
 
-const doAllKeys =  (doKey: (string?: string) => string): DoAllKeys => (o) => {
-  if (o === undefined || o === null) return
-  const deal = doAllKeys(doKey)
-  if (isArray(o)) {
-    return o.map(deal)
+export const createResolver = (resolve: StringResolve): Resolver => function resolver(o, options): any {
+  if (Array.isArray(o)) {
+    return o.map(item => typeof item === 'object'
+      ? resolver(item, options)
+      : item)
   }
-  if (isString(o) || isNumber(o)) {
-    return o
-  }
-  const tempObj = mapKeys(o, (value, key) => doKey(key))
-  forIn(tempObj, (value, key) => {
-    if (!isNumber(value) && !isString(value) && !isBoolean(value)) tempObj[key] = deal(value)
-  })
-  return tempObj
+  return Object.entries(o).reduce((acc, [key, value]) => {
+    let needResolve = true
+    if (options?.excludes) {
+      needResolve = !options.excludes.some(exclude => {
+        if (typeof exclude === 'string') {
+          return exclude === key
+        }
+        return exclude.test(key)
+      })
+    }
+    const nk = needResolve ? resolve(key) : key
+    if (typeof value === 'object') {
+      acc[nk] = resolver(value, options)
+    } else {
+      acc[nk] = o[key]
+    }
+    return acc
+  }, {} as Record<string, any>)
 }
 
-export const snakeCaseObjKeys = doAllKeys(snakeCase)
+export function camelCase(s: string) {
+  return s
+    .replace(/['\u2019]/g, '')
+    .replace(/([-_ ][!-_ ])/ig, ($1) => {
+      return $1.toUpperCase()
+        .replace(' ', '')
+        .replace('-', '')
+        .replace('_', '');
+    });
+}
 
-export const camelCaseObjKeys = doAllKeys(camelCase as (string?: string) => string)
+export function snakeCase(s: string) {
+  return s
+    .replace(/['\u2019]/g, '')
+    .replace(/\s+/g, '_')
+    .replace(/([a-z\d])([A-Z])/g, '$1_$2')
+    .replace(/[-\s]+/g, '_')
+    .toLowerCase();
+}
+
+export const camelCaseObjKeys = createResolver(camelCase)
+export const snakeCaseObjKeys = createResolver(snakeCase)
