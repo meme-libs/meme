@@ -61,10 +61,11 @@
       </div>
     </div>
   </div>
+  <div id="utteranc"/>
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { ElAvatar, ElBadge, ElButton, ElCol, ElCard, ElTag, ElTooltip, ElRow } from 'element-plus'
 import api, { Github } from '@/api'
 import Meme from '@/components/meme.vue'
@@ -135,11 +136,34 @@ const meme = computed(() => {
 
 const issue = ref<Github.Issue>()
 
+const script = document.createElement('script')
+script.src = '/utteranc.client.js'
+script.setAttribute('repo', 'meme-lib/meme')
+script.setAttribute('theme', 'github-light')
+script.setAttribute('crossorigin', 'anonymous')
+script.setAttribute('async', 'true')
+
 watch(id, async () => {
   if (!id.value) return
 
+  script.setAttribute('issue-number', id.value.toString())
+
+  const utteranc = document.getElementById('utteranc')
+  if (utteranc) {
+    utteranc.innerHTML = ''
+    utteranc.appendChild(script)
+  }
+
   issue.value = await api.repos.issue(id.value)
 }, { immediate: true })
+
+onMounted(() => {
+  const utteranc = document.getElementById('utteranc')
+  if (utteranc) {
+    utteranc.innerHTML = ''
+    utteranc.appendChild(script)
+  }
+})
 </script>
 
 <style lang="scss" scoped>
@@ -194,5 +218,9 @@ div.meme-with-autor {
     }
     // stylelint-enable max-line-length
   }
+}
+#utteranc > :deep(div.utterances) {
+  margin: 0;
+  max-width: 100%;
 }
 </style>
