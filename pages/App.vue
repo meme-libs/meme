@@ -1,6 +1,8 @@
 <template>
   <header>
-    <h1>Meme</h1>
+    <router-link to="/">
+      <h1>Meme</h1>
+    </router-link>
     <div class="icons">
       <span
         class="icon material-icons style-mode"
@@ -35,8 +37,8 @@ const toggleDark = useToggle(isDark)
 header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0.5rem 10rem;
-  > h1 { flex-grow: 1; }
   > div.icons {
     display: flex;
     column-gap: 10px;
