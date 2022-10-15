@@ -26,6 +26,7 @@ export namespace Github {
     id: number
     avatarUrl: string
     type: 'User' | 'Organization'
+    htmlUrl: string
   }
   export interface Label {
     id: number
