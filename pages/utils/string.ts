@@ -1,6 +1,8 @@
-type Resolver = (o: any, options?: {
+export interface ResolverOptions {
   excludes?: (string | RegExp)[]
-}) => any;
+}
+
+type Resolver = (o: any, options?: ResolverOptions) => any;
 
 type StringResolve = (string: string) => string
 
@@ -37,8 +39,8 @@ export function camelCase(s: string) {
       return $1.toUpperCase()
         .replace(' ', '')
         .replace('-', '')
-        .replace('_', '');
-    });
+        .replace('_', '')
+    })
 }
 
 export function snakeCase(s: string) {
@@ -47,7 +49,7 @@ export function snakeCase(s: string) {
     .replace(/\s+/g, '_')
     .replace(/([a-z\d])([A-Z])/g, '$1_$2')
     .replace(/[-\s]+/g, '_')
-    .toLowerCase();
+    .toLowerCase()
 }
 
 export const camelCaseObjKeys = createResolver(camelCase)
