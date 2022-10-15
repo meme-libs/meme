@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "commonjs",
+    "target": "ESNext",
+    "module": "CommonJS",
     "lib": [
       "esnext", "dom"
     ],
@@ -9,7 +9,7 @@
     "removeComments": false,
     "strict": true,
     "moduleResolution": "node",
-    "types": [ "node" ],
+    "types": [ "node", "mocha", "chai" ],
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
