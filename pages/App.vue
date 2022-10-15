@@ -33,13 +33,6 @@ const isDark = useDark()
 const toggleDark = useToggle(isDark)
 </script>
 
-<style lang="scss">
-a {
-  color: inherit;
-  text-decoration: none;
-}
-</style>
-
 <style lang="scss" scoped>
 header {
   display: flex;
