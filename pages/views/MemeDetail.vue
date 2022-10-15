@@ -24,6 +24,13 @@
             </el-badge>
           </el-col>
         </el-row>
+        <el-row>
+          <h2>
+            <a :href="issue?.pullRequest.htmlUrl" target="_blank">
+              {{ meme.title }}
+            </a>
+          </h2>
+        </el-row>
       </div>
     </el-card>
     <div class="autor-meta">
