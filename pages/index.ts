@@ -11,7 +11,8 @@ import { router } from './router'
 const app = createApp(App)
 
 app.config.globalProperties = {
-  MEMES: window.MEMES, TITLE: window.TITLE
+  MEMES: window.MEMES, TITLE: window.TITLE,
+  REPO: window.REPO
 }
 
 document.title = TITLE

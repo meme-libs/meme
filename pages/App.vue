@@ -17,7 +17,7 @@
         class="icon material-icons"
         @click="jumpToGithubRepo"
       >
-        <img :src="`/meme/github/GitHub-${ !isDark ? 'D' : 'L' }.png`" alt="github" width="24">
+        <img :src="`/${REPO}/github/GitHub-${ !isDark ? 'D' : 'L' }.png`" alt="github" width="24">
       </span>
     </div>
   </header>
