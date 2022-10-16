@@ -7,7 +7,7 @@
           <a
             class="material-icons"
             download
-            :href="meme.srcList[0]"
+            :href="meme.srcList[curI]"
           >
             download
           </a>
@@ -20,19 +20,20 @@
     <meme
       :title="meme.title"
       :src-list="meme.srcList"
+      @value="curI"
     />
   </el-card>
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { ElCard, ElButton } from 'element-plus'
 import Meme from './meme.vue'
 
-const randomCount = ref(0)
+const randomMemeIndex = ref(0)
 
 function setRandomCount() {
-  randomCount.value = Math.floor(
+  randomMemeIndex.value = Math.floor(
     Math.random() * MEMES.length
   )
 }
@@ -40,8 +41,10 @@ function setRandomCount() {
 setRandomCount()
 
 const meme = computed(() => {
-  return MEMES[randomCount.value]
+  return MEMES[randomMemeIndex.value]
 })
+
+const curI = ref(0)
 </script>
 
 <style lang="scss" scoped>

@@ -4,7 +4,13 @@
       <span class="material-icons" style="font-size: 14px;">photo_library</span>
       {{ srcList.length }}
     </span>
-    <el-carousel trigger="click" :autoplay="false" :loop="false">
+    <el-carousel
+      trigger="click"
+      :loop="false"
+      :autoplay="false"
+      :initial-index="value"
+      @change="i => $emit('update:value', i)"
+    >
       <el-carousel-item v-for="(src, i) in srcList" :key="src">
         <img :src="src" :alt="`${title}-${i}`"/>
       </el-carousel-item>
@@ -15,9 +21,16 @@
 <script lang="ts" setup>
 import { ElCarousel, ElCarouselItem } from 'element-plus'
 
-defineProps<{
+withDefaults(defineProps<{
   title: string
   srcList: string[]
+  value?: number
+}>(), {
+  value: 0
+})
+
+defineEmits<{
+  'update:value': (i: number) => void
 }>()
 </script>
 
