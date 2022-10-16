@@ -44,7 +44,8 @@ const rollupOptions: BuildOptions['rollupOptions'] = {
 }
 
 export default defineConfig({
-  root: './pages',
+  root: 'pages',
+  base: `/${process.env.REPO}/`,
   publicDir: 'public',
   define: {
     MEMES: allMemes(),
