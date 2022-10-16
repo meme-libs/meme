@@ -4,9 +4,15 @@
       <h2 :id="meme.title">#{{meme.title}}</h2>
       <span>
         <el-button link>
-          <span class="material-icons">download</span>
+          <a
+            class="material-icons"
+            download
+            :href="meme.srcList[0]"
+          >
+            download
+          </a>
         </el-button>
-        <el-button link>
+        <el-button link @click="setRandomCount">
           <span class="material-icons">refresh</span>
         </el-button>
       </span>
@@ -23,9 +29,16 @@ import { computed, ref } from 'vue'
 import { ElCard, ElButton } from 'element-plus'
 import Meme from './meme.vue'
 
-const randomCount = ref(Math.floor(
-  Math.random() * MEMES.length
-))
+const randomCount = ref(0)
+
+function setRandomCount() {
+  randomCount.value = Math.floor(
+    Math.random() * MEMES.length
+  )
+}
+
+setRandomCount()
+
 const meme = computed(() => {
   return MEMES[randomCount.value]
 })
