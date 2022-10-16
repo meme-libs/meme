@@ -44,13 +44,13 @@ export default defineConfig({
   root: 'pages',
   base: `/${process.env.REPO}/`,
   define: {
-    MEMES: allMemes(),
-    ORG: JSON.stringify(process.env.ORG),
-    REPO: JSON.stringify(process.env.REPO),
-    HOST: JSON.stringify(process.env.NODE_ENV === 'production'
+    __MEMES: allMemes(),
+    __TITLE: JSON.stringify(process.env.TITLE),
+    __REPO: JSON.stringify(process.env.REPO),
+    __HOST: JSON.stringify(process.env.NODE_ENV === 'production'
       ? process.env.HOST
       : '/github-api'),
-    TITLE: JSON.stringify(process.env.TITLE)
+    __ORG: JSON.stringify(process.env.ORG)
   },
   resolve: {
     alias: {
