@@ -70,6 +70,7 @@ import { ElAvatar, ElBadge, ElButton, ElCol, ElCard, ElTag, ElTooltip, ElRow } f
 import api, { Github } from '@/api'
 import Meme from '@/components/meme.vue'
 import { getHSL, getRGB } from '@/utils/color'
+import { useDark } from '@vueuse/core'
 
 function tagStyle(hex: string) {
   const [r, g, b] = getRGB(hex)
@@ -102,33 +103,42 @@ const meme = computed(() => {
 
 const issue = ref<Github.Issue>()
 
+const isDark = useDark()
+
+const theme = computed(() => isDark.value ? 'github-dark' : 'github-light')
+
 const script = document.createElement('script')
 script.src = '/utteranc.client.js'
 script.setAttribute('repo', 'meme-lib/meme')
-script.setAttribute('theme', 'github-light')
+script.setAttribute('theme', theme.value)
 script.setAttribute('crossorigin', 'anonymous')
 script.setAttribute('async', 'true')
+
+function rerederUtteranc() {
+  const utteranc = document.getElementById('utteranc')
+  if (utteranc) {
+    utteranc.innerHTML = ''
+    utteranc.appendChild(script)
+  }
+}
+
+watch(theme, () => {
+  script.setAttribute('theme', theme.value)
+  console.log('theme change and trigger render utterances', theme.value)
+  rerederUtteranc()
+})
 
 watch(id, async () => {
   if (!id.value) return
 
   script.setAttribute('issue-number', id.value.toString())
-
-  const utteranc = document.getElementById('utteranc')
-  if (utteranc) {
-    utteranc.innerHTML = ''
-    utteranc.appendChild(script)
-  }
+  rerederUtteranc()
 
   issue.value = await api.repos.issue(id.value)
 }, { immediate: true })
 
 onMounted(() => {
-  const utteranc = document.getElementById('utteranc')
-  if (utteranc) {
-    utteranc.innerHTML = ''
-    utteranc.appendChild(script)
-  }
+  rerederUtteranc()
 })
 </script>
 
