@@ -41,7 +41,6 @@ jobs:
           ORG=${{ github.event.repository.owner.login }}
           REPO=${{ github.event.repository.name }}
           EOF
-          cat .env
 
       - name: Build site
         run: yarn build
