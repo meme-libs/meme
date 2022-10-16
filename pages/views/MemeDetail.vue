@@ -108,7 +108,7 @@ const isDark = useDark()
 const theme = computed(() => isDark.value ? 'github-dark' : 'github-light')
 
 const script = document.createElement('script')
-script.src = `/${ REPO }/utteranc.client.js`
+script.src = 'https://utteranc.es/client.js'
 script.setAttribute('repo', `${ ORG }/${ REPO }`)
 script.setAttribute('theme', theme.value)
 script.setAttribute('crossorigin', 'anonymous')
