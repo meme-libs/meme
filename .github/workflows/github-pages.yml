@@ -35,6 +35,14 @@ jobs:
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn --frozen-lockfile
 
+      - name: Generate env config
+        run: |
+          cat > .env <<EOF
+          ORG=${{ github.event.repository.owner.login }}
+          REPO=${{ github.event.repository.name }}
+          EOF
+          cat .env
+
       - name: Build site
         run: yarn build
 
