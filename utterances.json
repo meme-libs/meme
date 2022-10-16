@@ -1,6 +1,5 @@
 {
   "origins": [
-    "https://meme-lib.github.io",
-    "http://localhost:5173"
+    "https://meme-lib.github.io"
   ]
 }
