@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "serve": "vite serve",
-    "build": "vite build"
+    "build": "vite build && cp -r pages/public/* dist"
   },
   "devDependencies": {
     "@types/chai": "^4.3.3",
