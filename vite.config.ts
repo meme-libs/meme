@@ -15,6 +15,7 @@ function envPreCheck() {
     process.exit(1)
   }
   process.env.HOST ||= 'https://api.github.com'
+  process.env.TITLE ||= 'Meme'
 }
 
 envPreCheck()
@@ -46,7 +47,8 @@ export default defineConfig({
     MEMES: allMemes(),
     ORG: JSON.stringify(process.env.ORG),
     REPO: JSON.stringify(process.env.REPO),
-    HOST: JSON.stringify(process.env.HOST)
+    HOST: JSON.stringify(process.env.HOST),
+    TITLE: JSON.stringify(process.env.TITLE)
   },
   resolve: {
     alias: {

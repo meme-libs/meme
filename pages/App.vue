@@ -1,7 +1,7 @@
 <template>
   <header>
     <router-link to="/">
-      <h1>Meme</h1>
+      <h1>{{ TITLE }}</h1>
     </router-link>
     <div class="icons">
       <span

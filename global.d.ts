@@ -9,10 +9,12 @@ export declare global {
   export declare const ORG: string
   export declare const REPO: string
   export declare const HOST: string
+  export declare const TITLE: string
   export interface Window {
     MEMES: Meme[]
     ORG: typeof ORG
     REPO: typeof REPO
     HOST: typeof HOST
+    TITLE: typeof TITLE
   }
 }

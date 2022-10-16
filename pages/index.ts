@@ -11,9 +11,10 @@ import { router } from './router'
 const app = createApp(App)
 
 app.config.globalProperties = {
-  // @ts-ignore
-  MEMES: MEMES
+  MEMES, TITLE
 }
+
+document.title = TITLE
 
 app
   .use(router)
