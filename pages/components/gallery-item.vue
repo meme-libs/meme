@@ -4,11 +4,8 @@
       :title="title"
       :src-list="srcList"
     />
-    <div class="title">
+    <div class="title" @click="$router.push(`/${id}`)">
       <h5>{{ title }}</h5>
-    </div>
-    <div class="description">
-      {{ description }}
     </div>
   </div>
 </template>
@@ -35,6 +32,7 @@ div.gallery-item {
   .title {
     padding: 5px;
     width: 100%;
+    cursor: pointer;
     h5 {
       padding: 0;
       margin: 0;
