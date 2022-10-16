@@ -835,6 +835,11 @@ domutils@^3.0.1:
     domelementtype "^2.3.0"
     domhandler "^5.0.1"
 
+dotenv@^16.0.3:
+  version "16.0.3"
+  resolved "https://registry.npmmirror.com/dotenv/-/dotenv-16.0.3.tgz#115aec42bac5053db3c456db30cc243a5a836a07"
+  integrity sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==
+
 element-plus@^2.2.17:
   version "2.2.17"
   resolved "https://registry.npmmirror.com/element-plus/-/element-plus-2.2.17.tgz#abbb12c19dc029c95b0271822ea9a0e635704bc2"
