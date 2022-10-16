@@ -1,12 +1,12 @@
 import { camelCaseObjKeys, ResolverOptions } from '@/utils/string'
 
 const config = {
-  host: 'api.github.com',
-  org: 'meme-lib',
-  repo: 'meme'
+  host: HOST,
+  org: ORG,
+  repo: REPO
 }
 
-const prefix = `https://${config.host}`
+const prefix = `${config.host}`
 
 const repoPrefix = `${prefix}/repos/${config.org}/${config.repo}`
 

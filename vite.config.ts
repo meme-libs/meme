@@ -14,7 +14,7 @@ function envPreCheck() {
     console.error('You can copy .env.example to .env and modify it')
     process.exit(1)
   }
-  process.env.HOST ||= 'api.github.com'
+  process.env.HOST ||= 'https://api.github.com'
 }
 
 envPreCheck()
