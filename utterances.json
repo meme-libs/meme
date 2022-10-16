@@ -1,3 +1,6 @@
 {
-  "origins": ["https://utteranc.es"]
+  "origins": [
+    "https://meme-lib.github.io",
+    "http://localhost:5173"
+  ]
 }
