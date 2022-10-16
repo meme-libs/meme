@@ -9,7 +9,7 @@
         <el-row>
           <el-col :span="12">
             <h2>
-              <a :href="issue?.pullRequest.htmlUrl" target="_blank">
+              <a :href="issue?.pullRequest?.htmlUrl" target="_blank">
                 {{ meme.title }}
               </a>
             </h2>
