@@ -41,5 +41,6 @@ module.exports = {
         varsIgnorePattern: '^_.*$'
       }
     ]
-  }
+  },
+  ignorePatterns: [ 'pages/public/*' ]
 }
