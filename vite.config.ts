@@ -37,9 +37,6 @@ function allMemes() {
 const rollupOptions: BuildOptions['rollupOptions'] = {
   input: {
     index: resolve(__dirname, './pages/index.html')
-  },
-  output: {
-    dir: resolve(__dirname, './dist')
   }
 }
 
