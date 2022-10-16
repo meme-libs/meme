@@ -44,9 +44,9 @@ export default defineConfig({
   publicDir: 'public',
   define: {
     MEMES: allMemes(),
-    ORG: process.env.ORG,
-    REPO: process.env.REPO,
-    HOST: process.env.HOST
+    ORG: JSON.stringify(process.env.ORG),
+    REPO: JSON.stringify(process.env.REPO),
+    HOST: JSON.stringify(process.env.HOST)
   },
   resolve: {
     alias: {
