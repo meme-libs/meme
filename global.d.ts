@@ -6,7 +6,13 @@ export declare global {
     srcList: string[]
   }
   export declare const MEMES: Meme[]
+  export declare const ORG: string
+  export declare const REPO: string
+  export declare const HOST: string
   export interface Window {
     MEMES: Meme[]
+    ORG: typeof ORG
+    REPO: typeof REPO
+    HOST: typeof HOST
   }
 }
