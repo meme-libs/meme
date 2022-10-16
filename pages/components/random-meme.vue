@@ -15,6 +15,9 @@
         <el-button link @click="setRandomCount">
           <span class="material-icons">refresh</span>
         </el-button>
+        <el-button link @click="$router.push(`/${meme.id}`)">
+          <span class="material-icons">pending</span>
+        </el-button>
       </span>
     </template>
     <meme
