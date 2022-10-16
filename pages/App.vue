@@ -13,7 +13,10 @@
       >
         {{!isDark ? 'dark_mode' : 'light_mode'}}
       </span>
-      <span class="icon material-icons">
+      <span
+        class="icon material-icons"
+        @click="jumpToGithubRepo"
+      >
         <img :src="`assets/github/GitHub-${ !isDark ? 'D' : 'L' }.png`" alt="github" width="24">
       </span>
     </div>
@@ -31,6 +34,10 @@ import { useDark, useToggle } from '@vueuse/core'
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
+
+function jumpToGithubRepo() {
+  window.open(`https://github.com/${ORG}/${REPO}`, '_blank')
+}
 </script>
 
 <style lang="scss" scoped>
