@@ -47,7 +47,9 @@ export default defineConfig({
     MEMES: allMemes(),
     ORG: JSON.stringify(process.env.ORG),
     REPO: JSON.stringify(process.env.REPO),
-    HOST: JSON.stringify(process.env.HOST),
+    HOST: JSON.stringify(process.env.NODE_ENV === 'production'
+      ? process.env.HOST
+      : '/github-api'),
     TITLE: JSON.stringify(process.env.TITLE)
   },
   resolve: {
@@ -56,5 +58,14 @@ export default defineConfig({
     }
   },
   build: { rollupOptions },
-  plugins: [ vue() ]
+  plugins: [ vue() ],
+  server: {
+    proxy: {
+      '/github-api': {
+        target: process.env.HOST,
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/github-api/, '')
+      }
+    }
+  }
 })
