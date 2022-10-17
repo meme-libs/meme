@@ -10,14 +10,19 @@ const prefix = `${config.host}`
 
 const repoPrefix = `${prefix}/repos/${config.org}/${config.repo}`
 
-const resolveFetch = async <T>(p: Promise<Response>, options?: ResolverOptions) => {
+const resolveFetch = async (p: Promise<Response>) => {
   const res = await p
   if (res.ok) {
-    const d = await res.json()
-    return camelCaseObjKeys(d, options) as T
+    return res
   } else {
     throw new Error(res.statusText)
   }
+}
+
+const resolveJsonFetch = async <T>(p: Promise<Response>, options?: ResolverOptions) => {
+  return camelCaseObjKeys(await (
+    await resolveFetch(p)
+  ).json(), options) as T
 }
 
 export namespace Github {
@@ -87,14 +92,34 @@ export namespace Github {
       totalCount: number
     }
   }
+
+  export interface MDInn {
+    text: string
+    mode: 'markdown' | 'gfm' | 'html' | 'rst'
+    context?: string
+  }
 }
 
 export default {
   repos: {
     async issue(id: number) {
-      return resolveFetch<Github.Issue>(fetch(`${repoPrefix}/issues/${id}`), {
+      return resolveJsonFetch<Github.Issue>(fetch(`${repoPrefix}/issues/${id}`), {
         excludes: [ '-1' ]
       })
     }
+  },
+  async markdown(inn: Github.MDInn | string) {
+    const body: Github.MDInn = (typeof inn === 'string') ? {
+      text: inn,
+      mode: 'gfm'
+    } : inn
+    body.context ??= `${ORG}/${REPO}`
+    return (await resolveFetch(fetch(`${prefix}/markdown`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    }))).text()
   }
 }
