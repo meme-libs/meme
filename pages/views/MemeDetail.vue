@@ -40,7 +40,8 @@
             </el-row>
           </template>
           <el-row>
-            {{ issue?.body }}
+            <span class="markdown-body" v-if="descMD" v-html="descMD" />
+            <span class="markdown-body" v-else v-text="issue?.body" />
           </el-row>
           <el-row>
             <el-col :span="8"></el-col>
@@ -216,6 +217,22 @@ watch(id, async () => {
   setTimeout(() => loading.issue = false, 500)
 }, { immediate: true })
 
+const descMD = ref<string>()
+
+watch(() => issue.value?.body, async () => {
+  if (!issue.value?.body) return
+
+  try {
+    descMD.value = await api.markdown(issue.value.body)
+  } catch (e) {
+    if (e instanceof Error) {
+      ElMessage.error(e.message)
+    } else {
+      ElMessage.error('未知错误')
+    }
+  }
+})
+
 onMounted(() => {
   rerederUtteranc()
 })
@@ -291,6 +308,10 @@ div.meme-with-autor {
     }
     // stylelint-enable max-line-length
   }
+}
+.markdown-body {
+  font-size: 14px;
+  background-color: transparent;
 }
 #utteranc > :deep(div.utterances) {
   margin: 0;
