@@ -122,12 +122,6 @@ function rerederUtteranc() {
   }
 }
 
-watch(theme, () => {
-  script.setAttribute('theme', theme.value)
-  console.log('theme change and trigger render utterances', theme.value)
-  rerederUtteranc()
-})
-
 watch(id, async () => {
   if (!id.value) return
 
