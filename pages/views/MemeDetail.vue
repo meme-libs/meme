@@ -19,58 +19,130 @@
             <el-badge
               type="primary"
               v-for="reaction in Github.Reactions" :key="reaction"
-              :value="issue?.reactions[reaction]"
+              :value="issue?.reactions?.[reaction] ?? 0"
             >
               <el-button size="small">{{ Github.ReactionEmoji(reaction) }}</el-button>
             </el-badge>
           </el-col>
         </el-row>
-        <el-row>
-          {{ issue?.body }}
-        </el-row>
-        <el-row>
-          <el-col :span="8"></el-col>
-          <el-col :span="8" style="justify-content: end;">
-            创建时间: {{ new Date(issue?.createdAt).toLocaleString() }}
-          </el-col>
-          <el-col :span="8" style="justify-content: end;">
-            更新时间: {{ new Date(issue?.updatedAt).toLocaleString() }}
-          </el-col>
-        </el-row>
+        <el-skeleton
+          :animated="animated.issue"
+          :loading="loading.issue"
+        >
+          <template #template>
+            <el-row>
+              <el-skeleton-item variant="text" />
+            </el-row>
+            <el-row>
+              <el-col :span="8"></el-col>
+              <el-col :span="8"><el-skeleton-item variant="text" style="margin-left: 50%; width: 50%;" /></el-col>
+              <el-col :span="8"><el-skeleton-item variant="text" style="margin-left: 50%; width: 50%;" /></el-col>
+            </el-row>
+          </template>
+          <el-row>
+            {{ issue?.body }}
+          </el-row>
+          <el-row>
+            <el-col :span="8"></el-col>
+            <el-col :span="8" style="justify-content: end;">
+              创建时间: {{ new Date(issue?.createdAt).toLocaleString() }}
+            </el-col>
+            <el-col :span="8" style="justify-content: end;">
+              更新时间: {{ new Date(issue?.updatedAt).toLocaleString() }}
+            </el-col>
+          </el-row>
+        </el-skeleton>
       </div>
     </el-card>
     <div class="other-meta">
-      <div class="author">
-        <el-avatar
-          :src="issue?.user.avatarUrl"
-        />
-        <h3 class="username">
-          <a :href="issue?.user.htmlUrl" target="_blank">{{ issue?.user.login }}</a>
-        </h3>
-      </div>
-      <el-button type="primary" @click="toUserProfile">关注</el-button>
-      <div class="tags">
-        <el-tooltip
-          v-for="tag in issue?.labels" :key="tag"
-          :content="tag.description"
-        >
-          <el-tag round :style="tagStyle(tag.color)">
-            {{ tag.name }}
-          </el-tag>
-        </el-tooltip>
-      </div>
+      <el-skeleton
+        :animated="animated.issue"
+        :loading="loading.issue"
+        :style="{
+          display: 'flex',
+          flexDirection: 'column',
+          rowGap: '10px',
+        }"
+      >
+        <template #template>
+          <div style="
+            display: flex;
+            align-items: center;">
+            <el-skeleton-item
+              variant="image"
+              style="height: 32px; min-width: 32px; border-radius: 50%;"
+            />
+            <el-skeleton-item
+              variant="p"
+              style="margin-left: 10px;"
+            />
+          </div>
+          <el-button type="primary" disabled style="width: 100%;">关注</el-button>
+          <div class="tags">
+            <el-skeleton-item
+              variant="p"
+              style="width: 40px;"
+            />
+            <el-skeleton-item
+              variant="p"
+              style="width: 40px;"
+            />
+          </div>
+        </template>
+        <div class="author">
+          <el-avatar
+            :src="issue?.user.avatarUrl"
+          />
+          <h3 class="username">
+            <a :href="issue?.user.htmlUrl" target="_blank">{{ issue?.user.login }}</a>
+          </h3>
+        </div>
+        <el-button type="primary" @click="toUserProfile">关注</el-button>
+        <div class="tags">
+          <el-tooltip
+            v-for="tag in issue?.labels" :key="tag"
+            :content="tag.description"
+          >
+            <el-tag round :style="tagStyle(tag.color)">
+              {{ tag.name }}
+            </el-tag>
+          </el-tooltip>
+          <template v-if="!issue?.labels">
+            暂无标签
+          </template>
+        </div>
+      </el-skeleton>
     </div>
   </div>
   <div id="utteranc"/>
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, ref, watch } from 'vue'
-import { ElAvatar, ElBadge, ElButton, ElCol, ElCard, ElTag, ElTooltip, ElRow } from 'element-plus'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
+import {
+  ElAvatar,
+  ElBadge,
+  ElButton,
+  ElCol,
+  ElCard,
+  ElTag,
+  ElTooltip,
+  ElRow,
+  ElSkeleton,
+  ElSkeletonItem, ElMessage
+} from 'element-plus'
 import api, { Github } from '@/api'
 import Meme from '@/components/meme.vue'
 import { getHSL, getRGB } from '@/utils/color'
 import { useDark } from '@vueuse/core'
+
+const loading = reactive({
+  issue: true
+})
+
+const animated = reactive({
+  issue: true
+})
 
 function tagStyle(hex: string) {
   const [r, g, b] = getRGB(hex)
@@ -128,7 +200,20 @@ watch(id, async () => {
   script.setAttribute('issue-number', id.value.toString())
   rerederUtteranc()
 
-  issue.value = await api.repos.issue(id.value)
+  loading.issue = true
+  animated.issue = true
+  try {
+    issue.value = await api.repos.issue(id.value)
+  } catch (e) {
+    if (e instanceof Error) {
+      ElMessage.error(e.message)
+    } else {
+      ElMessage.error('未知错误')
+    }
+    setTimeout(() => animated.issue = false, 500)
+    return
+  }
+  setTimeout(() => loading.issue = false, 500)
 }, { immediate: true })
 
 onMounted(() => {
@@ -152,7 +237,19 @@ div.meme-with-autor {
       }
     }
     div.meta {
+      display: flex;
+      flex-direction: column;
+      row-gap: 10px;
       padding: 20px;
+      > div.el-skeleton {
+        display: flex;
+        flex-direction: column;
+        row-gap: 20px;
+      }
+      > div.el-row {
+        min-height: 20px;
+        line-height: 20px;
+      }
       > div.el-row > div.el-col {
         display: flex;
         align-items: center;
@@ -172,6 +269,12 @@ div.meme-with-autor {
       > h3.username {
         margin-left: 10px;
       }
+    }
+    div.tags {
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: 10px;
+      min-height: 40px;
     }
     // stylelint-disable max-line-length
     > div.tags > :deep(.el-tag) {
