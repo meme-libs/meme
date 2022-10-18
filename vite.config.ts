@@ -20,18 +20,46 @@ function envPreCheck() {
 
 envPreCheck()
 
-function allMemes() {
-  const memesDir = resolve(__dirname, './memes')
-  return readdirSync(memesDir)
-    .map(dir => {
+function genMemes(path: string): [memes: Meme[], otherDirs: string[]] {
+  const dirs = readdirSync(path)
+  const titles = dirs.filter(dir => dir.startsWith('['))
+  return [
+    titles.map(dir => {
       const [id, title] = /^\[(\d+)]\[(.*)]$/.exec(dir)!.slice(1)
       return {
         id: Number(id),
         title,
         description: title,
-        srcList: readdirSync(resolve(memesDir, dir)).map(src => `memes/${dir}/${src}`)
-      } as Meme
-    })
+        srcList: readdirSync(resolve(path, dir)).map(src => `${path}/${dir}/${src}`)
+      }
+    }),
+    dirs.filter(dir => !dir.startsWith('['))
+  ]
+}
+function allMemes() {
+  const ORG = process.env.ORG!
+  const REPO = process.env.REPO!
+
+  // 解决 fork 出来的仓库，可能的冲突问题
+  let path = 'memes'
+  if (ORG !== 'meme-libs') {
+    path += `/${ORG}`
+  }
+  if (REPO !== 'meme') {
+    path += `/${REPO}`
+  }
+  const [memes, otherDirs] = genMemes(path)
+  if (ORG === 'meme-libs' && REPO === 'meme') {
+    (function resolveOtherDirs(otherDirs: string[]) {
+      if (otherDirs.length === 0) return
+      otherDirs.forEach(dir => {
+        const [dirMemes, otherDirs] = genMemes(resolve(path, dir))
+        memes.push(...dirMemes)
+        resolveOtherDirs(otherDirs)
+      })
+    })(otherDirs)
+  }
+  return memes
 }
 
 const rollupOptions: BuildOptions['rollupOptions'] = {
