@@ -43,10 +43,10 @@ function allMemes() {
   // 解决 fork 出来的仓库，可能的冲突问题
   let path = 'memes'
   if (ORG !== 'meme-libs') {
-    path = `./memes/${ORG}`
+    path += `/${ORG}`
   }
   if (REPO !== 'meme') {
-    path = `./memes/${ORG}/${REPO}`
+    path += `/${REPO}`
   }
   const [memes, otherDirs] = genMemes(path)
   if (ORG === 'meme-libs' && REPO === 'meme') {
