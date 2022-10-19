@@ -21,3 +21,11 @@
 * [x] 画廊
 * [ ] 搜索
 * [x] 绑定 issue，展示指定 issue 与它的标签与评论
+
+## 如何构建你的梗图 page
+
+* fork 仓库到你的 org 或者个人下
+* 打开 Actions 页面，点击 `I understand my workflows, go ahead and enable them`
+* 按照投稿流程，发起一个 pr 触发 workflow，等待构建完成
+* 在 Settings 找到 pages，将 source 选择为 `gh-pages` 分支
+* 等待几分钟，访问 `https://[your-username].github.io/meme/` 即可访问你的梗图
