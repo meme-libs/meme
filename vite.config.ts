@@ -92,6 +92,9 @@ export default defineConfig({
       '/github-api': {
         target: process.env.HOST,
         changeOrigin: true,
+        headers: {
+          ...(process.env.GITHUB_TOKEN ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {})
+        },
         rewrite: path => path.replace(/^\/github-api/, '')
       }
     }
