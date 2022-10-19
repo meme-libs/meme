@@ -22,6 +22,7 @@
 import { ElCarousel, ElCarouselItem } from 'element-plus'
 
 withDefaults(defineProps<{
+  id: number
   title: string
   srcList: string[]
   value?: number

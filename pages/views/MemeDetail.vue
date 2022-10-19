@@ -2,6 +2,7 @@
   <div class="meme-with-autor">
     <el-card class="detail">
       <meme
+        :id="meme.id"
         :title="meme.title"
         :src-list="meme.srcList"
       />

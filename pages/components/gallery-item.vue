@@ -1,6 +1,7 @@
 <template>
   <div class="gallery-item">
     <meme
+      :id="id"
       :title="title"
       :src-list="srcList"
     />
