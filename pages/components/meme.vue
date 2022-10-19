@@ -1,5 +1,7 @@
 <template>
-  <div class="meme">
+  <div class="meme" :class="{
+    'able-jump': ableJump
+  }">
     <span class="count">
       <span class="material-icons" style="font-size: 14px;">photo_library</span>
       {{ srcList.length }}
@@ -12,7 +14,12 @@
       @change="i => $emit('update:value', i)"
     >
       <el-carousel-item v-for="(src, i) in srcList" :key="src">
-        <img :src="src" :alt="`${title}-${i}`"/>
+        <img
+          class="meme-item"
+          :src="src"
+          :alt="`${title}-${i}`"
+          @click="router.push(`/${id}#${i}`)"
+        />
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -20,25 +27,33 @@
 
 <script lang="ts" setup>
 import { ElCarousel, ElCarouselItem } from 'element-plus'
+import { useRouter } from 'vue-router'
 
 withDefaults(defineProps<{
   id: number
   title: string
   srcList: string[]
   value?: number
+  ableJump?: boolean
 }>(), {
-  value: 0
+  value: 0,
+  ableJump: true
 })
 
 defineEmits<{
   'update:value': (i: number) => void
 }>()
+
+const router = useRouter()
 </script>
 
 <style lang="scss" scoped>
 .meme {
   position: relative;
   width: 100%;
+  &.able-jump img.meme-item {
+    cursor: pointer;
+  }
   > span.count {
     z-index: 10;
     position: absolute;
@@ -64,7 +79,7 @@ defineEmits<{
     .el-carousel__item {
       position: relative;
       display: block;
-      > img {
+      > img.meme-item {
         display: block;
         width: 100%;
         object-fit: contain;
