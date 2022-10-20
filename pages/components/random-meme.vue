@@ -21,9 +21,10 @@
       </span>
     </template>
     <meme
+      :id="meme.id"
       :title="meme.title"
       :src-list="meme.srcList"
-      @value="curI"
+      v-model:value="curI"
     />
   </el-card>
 </template>

@@ -9,13 +9,25 @@ import * as process from 'process'
 dotenv.config()
 
 function envPreCheck() {
-  if (!process.env.ORG || !process.env.REPO) {
+  const { ORG, REPO, TITLE } = process.env
+  if (!ORG || !REPO) {
     console.error('ORG and REPO must be set in .env')
     console.error('You can copy .env.example to .env and modify it')
     process.exit(1)
   }
   process.env.HOST ||= 'https://api.github.com'
-  process.env.TITLE ||= 'Meme'
+  if (!TITLE) {
+    let title = ''
+    if (ORG !== 'meme-libs') {
+      title += `${ORG}/`
+    }
+    if (REPO !== 'meme') {
+      title += `${REPO}`
+    }
+    title += ' Meme'
+
+    process.env.TITLE = title
+  }
 }
 
 envPreCheck()
@@ -92,6 +104,9 @@ export default defineConfig({
       '/github-api': {
         target: process.env.HOST,
         changeOrigin: true,
+        headers: {
+          ...(process.env.GITHUB_TOKEN ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {})
+        },
         rewrite: path => path.replace(/^\/github-api/, '')
       }
     }

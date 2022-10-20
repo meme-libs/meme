@@ -2,8 +2,10 @@
   <div class="meme-with-autor">
     <el-card class="detail">
       <meme
+        :id="meme.id"
         :title="meme.title"
         :src-list="meme.srcList"
+        v-model:value="memeIndex"
       />
       <div class="meta">
         <el-row>
@@ -236,6 +238,17 @@ watch(() => issue.value?.body, async () => {
 onMounted(() => {
   rerederUtteranc()
 })
+
+function getMemeIndex() {
+  const hashV = window.location.hash?.slice(1)
+  let i = Number(hashV)
+  if (!Number.isInteger(i)) {
+    i = meme.value?.srcList.findIndex(src => src.indexOf(hashV)) ?? 0
+  }
+  return i
+}
+
+const memeIndex = ref(getMemeIndex())
 </script>
 
 <style lang="scss" scoped>
