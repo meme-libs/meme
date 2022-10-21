@@ -2,7 +2,7 @@ export interface ResolverOptions {
   excludes?: (string | RegExp)[]
 }
 
-type Resolver = (o: any, options?: ResolverOptions) => any;
+type Resolver = (o: any, options?: ResolverOptions) => any
 
 type StringResolve = (string: string) => string
 

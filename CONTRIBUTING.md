@@ -49,4 +49,4 @@
 * 启动项目，`yarn serve`。
 * 访问终端显示的 url 链接。
 * Coding...
-* 提交你的代码，并创建相关的功能 PR，PR 的标题格式如 `FEATURE: some description #issue-number`。
+* 提交你的代码，并创建相关的功能 PR，PR 的标题格式如 `[FEATURE] some description #issue-number`。
