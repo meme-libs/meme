@@ -1,5 +1,5 @@
 <template>
-  <div class="meme-with-autor">
+  <div class="meme-with-author">
     <el-card class="detail">
       <meme
         :id="meme.id"
@@ -9,15 +9,14 @@
       />
       <div class="meta">
         <el-row>
-          <el-col :span="12">
+          <el-col :span="12" :xs="24">
             <h2>
               <a :href="issue?.pullRequest?.htmlUrl" target="_blank">
                 {{ meme.title }}
               </a>
             </h2>
           </el-col>
-          <el-col :span="12"
-                  style="justify-content: end; column-gap: 15px;">
+          <el-col :span="12" :xs="24">
             <el-badge
               type="primary"
               v-for="reaction in Github.Reactions" :key="reaction"
@@ -46,11 +45,11 @@
             <span class="markdown-body" v-else v-text="issue?.body" />
           </el-row>
           <el-row>
-            <el-col :span="8"></el-col>
-            <el-col :span="8" style="justify-content: end;">
+            <el-col :span="8" :xs="0"></el-col>
+            <el-col :span="8" style="justify-content: end;" :xs="12">
               创建时间: {{ new Date(issue?.createdAt).toLocaleString() }}
             </el-col>
-            <el-col :span="8" style="justify-content: end;">
+            <el-col :span="8" style="justify-content: end;" :xs="12">
               更新时间: {{ new Date(issue?.updatedAt).toLocaleString() }}
             </el-col>
           </el-row>
@@ -189,7 +188,7 @@ script.setAttribute('theme', theme.value)
 script.setAttribute('crossorigin', 'anonymous')
 script.setAttribute('async', 'true')
 
-function rerederUtteranc() {
+function rerenderUtteranc() {
   const utteranc = document.getElementById('utteranc')
   if (utteranc) {
     utteranc.innerHTML = ''
@@ -201,7 +200,7 @@ watch(id, async () => {
   if (!id.value) return
 
   script.setAttribute('issue-number', id.value.toString())
-  rerederUtteranc()
+  rerenderUtteranc()
 
   loading.issue = true
   animated.issue = true
@@ -236,7 +235,7 @@ watch(() => issue.value?.body, async () => {
 })
 
 onMounted(() => {
-  rerederUtteranc()
+  rerenderUtteranc()
 })
 
 function getMemeIndex() {
@@ -252,7 +251,7 @@ const memeIndex = ref(getMemeIndex())
 </script>
 
 <style lang="scss" scoped>
-div.meme-with-autor {
+div.meme-with-author {
   display: flex;
   > div.el-card.detail {
     :deep(div.el-card__body) {
@@ -271,6 +270,12 @@ div.meme-with-autor {
       flex-direction: column;
       row-gap: 10px;
       padding: 20px;
+      > div.el-row {
+        div.el-col:last-child {
+          justify-content: end;
+          column-gap: 15px;
+        }
+      }
       > div.el-skeleton {
         display: flex;
         flex-direction: column;
@@ -329,5 +334,31 @@ div.meme-with-autor {
 #utteranc > :deep(div.utterances) {
   margin: 0;
   max-width: 100%;
+}
+</style>
+
+<style lang="scss" scoped>
+@media screen and (max-width: 400px) {
+  div.meme-with-author {
+    flex-direction: column;
+    > div.el-card.detail {
+      div.meta {
+        > div.el-row {
+          div.el-col:last-child {
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            gap: 15px;
+          }
+        }
+      }
+    }
+    > div.other-meta {
+      max-width: 100%;
+      min-width: 100%;
+      div.tags {
+        min-height: 0px;
+      }
+    }
+  }
 }
 </style>

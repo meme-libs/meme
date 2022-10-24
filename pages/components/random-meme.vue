@@ -70,3 +70,16 @@ div.random-meme {
   }
 }
 </style>
+
+<style lang="scss" scoped>
+@media screen and (max-width: 400px) {
+  div.random-meme {
+    :deep(div.el-card__header) {
+      flex-direction: column;
+      > span {
+        margin-left: auto;
+      }
+    }
+  }
+}
+</style>
